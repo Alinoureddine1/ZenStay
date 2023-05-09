@@ -1,13 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-</head>
-<body>
-    <h2>About Page</h2>
-</body>
-</html>
+
+{{template "base" .}}
+
+{{define "css"}}
+<link rel="stylesheet" href="css/style.css">
+{{end}}
+
+{{define "content"}}
+<!-- Header section -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">ZenStay</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Browse Hotels</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Deals</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- About section -->
+<section class="about">
+    <div class="container">
+        <h2>About ZenStay</h2>
+        <p>
+            ZenStay is a leading hotel room booking platform committed to providing a seamless and stress-free experience for travelers worldwide. Since our founding in [year], we have been dedicated to offering the best deals on hotel rooms and delivering exceptional customer service.
+        </p>
+    </div>
+</section>
+
+<!-- Why choose us section -->
+<section class="why-choose-us">
+    <div class="container">
+        <h2>Why Choose ZenStay</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="icon-box">
+                    <i class="fa fa-check-square-o"></i>
+                </div>
+                <h3>Best Deals</h3>
+                <p>We negotiate the best deals with hotels to ensure our customers always receive the best value for their money.</p>
+            </div>
+            <div class="col-md-4">
+                <div class="icon-box">
+                    <i class="fa fa-thumbs-up"></i>
+                </div>
+                <h3>Easy Booking Process</h3>
+                <p>Our user-friendly platform makes booking hotel rooms a breeze. Find the perfect room in just a few clicks.</p>
+            </div>
+            <div class="col-md-4">
+                <div class="icon-box">
+                    <i class="fa fa-headphones"></i>
+                </div>
+                <h3>24/7 Customer Support</h3>
+                <p>Our dedicated customer support team is always ready to help you with any questions or concerns.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Meet our team section -->
+<section class="meet-our-team">
+    <div class="container">
+        <h2>Meet Our Team</h2>
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="team-member">
+                    <img src="images/team-member-1.jpg" alt="Team member 1" class="img-fluid">
+                    <h3>Jane Smith</h3>
+                    <p>CEO &amp; Co-Founder</p>
+                    <p>Jane is a seasoned entrepreneur with a passion for the travel industry. She has a strong background in business development and marketing and is dedicated to creating the best user experience for ZenStay's customers.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="team-member">
+                    <img src="images/team-member-2.jpg" alt="Team member 2" class="img-fluid">
+                    <h3>John Doe</h3>
+                    <p>CTO &amp; Co-Founder</p>
+                    <p>John is a talented software engineer with a wealth of experience in developing innovative solutions for the travel industry. His technical expertise ensures ZenStay's platform remains cutting-edge and user-friendly.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="team-member">
+                    <img src="images/team-member-3.jpg" alt="Team member 3" class="img-fluid">
+                    <h3>Mary Johnson</h3>
+                    <p>Customer Success Manager</p>
+                    <p>Mary leads ZenStay's customer success team, ensuring that all customers have a seamless and enjoyable experience using our platform. She is dedicated to providing exceptional customer support and satisfaction.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{{end}}
+{{define "js"}}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-dGQ7tuDlM4U2b4x9j9q2qGPtW1d8q3l3+hfrjwFRb1wWpTlkmA7dXzncA2Q0B0W8" crossorigin="anonymous"></script>
+{{end}}
+
+{{end}}
+           
