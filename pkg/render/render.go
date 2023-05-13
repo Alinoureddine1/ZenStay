@@ -9,6 +9,8 @@ import (
 	"text/template"
 
 	"github.com/Alinoureddine1/ZenStay/pkg/config"
+
+	"github.com/Alinoureddine1/ZenStay/pkg/models"
 )
 
 var app *config.AppConfig
@@ -19,8 +21,13 @@ func NewTemplates(a *config.AppConfig) {
 
 }
 
+// AddDefaultData adds data for all templates
+func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+	return td
+}
+
 // RenderTemplate renders templates using html/template
-func RenderTemplate(w http.ResponseWriter, tmpl string) {
+func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
 
 	var tc map[string]*template.Template
 	if app.UseCache {
@@ -35,8 +42,8 @@ func RenderTemplate(w http.ResponseWriter, tmpl string) {
 		log.Println("Could not get template from cache")
 	}
 	buf := new(bytes.Buffer)
-
-	_ = t.Execute(buf, nil)
+	td = AddDefaultData(td)
+	_ = t.Execute(buf, td)
 
 	//return the template to the browser
 	_, err := buf.WriteTo(w)
@@ -82,46 +89,3 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 	}
 	return myCache, nil
 }
-
-// var tc = make(map[string]*template.Template)
-
-// func RenderTemplate(w http.ResponseWriter, t string) {
-// 	var tmpl *template.Template
-// 	var err error
-
-// 	// check if the template is in the cache
-// 	_, ok := tc[t]
-
-// 	if !ok {
-// 		// if not, create the template cache
-// 		err = createTemplateCache(t)
-// 		if err != nil {
-// 			fmt.Println("Error parsing template:", err)
-// 		}
-
-// 	} else {
-// 		// get the template from the cache
-// 		log.Println("Template from cache")
-// 	}
-// 	tmpl = tc[t]
-// 	err = tmpl.Execute(w, nil)
-// 	if err != nil {
-// 		fmt.Println("Error parsing template:", err)
-// 	}
-// }
-
-// func createTemplateCache(t string) error {
-// 	templates := []string{
-// 		fmt.Sprintf("./templates/%s", t),
-// 		"./templates/base.layout.tmpl",
-// 	}
-// 	// parse the template
-// 	tmpl, err := template.ParseFiles(templates...)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	// cache the template
-// 	tc[t] = tmpl
-// 	return nil
-
-// }
