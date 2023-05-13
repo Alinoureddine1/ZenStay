@@ -5,13 +5,16 @@ import (
 
 	"github.com/Alinoureddine1/ZenStay/pkg/config"
 	"github.com/Alinoureddine1/ZenStay/pkg/handlers"
-	"github.com/bmizerany/pat"
+
+	"github.com/go-chi/chi/v5"
 )
 
 func routes(app *config.AppConfig) http.Handler {
 	//http handler
-	mux := pat.New()
-	mux.Get("/", http.HandlerFunc(handlers.Repo.Home))
-	mux.Get("/about", http.HandlerFunc(handlers.Repo.About))
+
+	mux := chi.NewRouter()
+
+	mux.Get("/", handlers.Repo.Home)
+	mux.Get("/about", handlers.Repo.About)
 	return mux
 }
