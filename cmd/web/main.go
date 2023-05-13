@@ -19,7 +19,11 @@ func main() {
 		log.Fatal("Cannot create template cache")
 	}
 	app.TemplateCache = tc
-	http.HandleFunc("/", handlers.Home)
-	http.HandleFunc("/about", handlers.About)
+
+	repo := handlers.NewRepo(&app)
+	handlers.NewHandlers(repo)
+	render.NewTemplates(&app)
+	http.HandleFunc("/", handlers.Repo.Home)
+	http.HandleFunc("/about", handlers.Repo.About)
 	_ = http.ListenAndServe(portNumber, nil)
 }

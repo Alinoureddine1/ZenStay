@@ -7,31 +7,39 @@ import (
 	"net/http"
 	"path/filepath"
 	"text/template"
+
+	"github.com/Alinoureddine1/ZenStay/pkg/config"
 )
+
+var app *config.AppConfig
+
+// NewTemplates sets the config for the template package
+func NewTemplates(a *config.AppConfig) {
+	app = a
+
+}
 
 // RenderTemplate renders templates using html/template
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
-	//create a template cache map
-	myCache, err := CreateTemplateCache()
-	if err != nil {
-		log.Println("Error parsing template:", err)
-	}
 
+	var tc map[string]*template.Template
+	if app.UseCache {
+		// get the template cache from the app config
+		tc = app.TemplateCache
+	} else {
+		tc, _ = CreateTemplateCache()
+	}
 	// get the requested template from the cache
-	t, ok := myCache[tmpl]
+	t, ok := tc[tmpl]
 	if !ok {
-		log.Println("Error parsing template:", err)
+		log.Println("Could not get template from cache")
 	}
-
 	buf := new(bytes.Buffer)
 
-	err = t.Execute(buf, nil)
-	if err != nil {
-		log.Println(err)
-	}
+	_ = t.Execute(buf, nil)
 
 	//return the template to the browser
-	_, err = buf.WriteTo(w)
+	_, err := buf.WriteTo(w)
 	if err != nil {
 		fmt.Println("Error writing template to browser:", err)
 	}
