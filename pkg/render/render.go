@@ -12,7 +12,7 @@ import (
 // RenderTemplate renders templates using html/template
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
 	//create a template cache map
-	myCache, err := createTemplateCache()
+	myCache, err := CreateTemplateCache()
 	if err != nil {
 		log.Println("Error parsing template:", err)
 	}
@@ -38,7 +38,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string) {
 
 }
 
-func createTemplateCache() (map[string]*template.Template, error) {
+func CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
 
 	// get all the pages
