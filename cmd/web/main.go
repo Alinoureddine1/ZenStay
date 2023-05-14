@@ -3,16 +3,28 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/Alinoureddine1/ZenStay/pkg/config"
 	"github.com/Alinoureddine1/ZenStay/pkg/handlers"
 	"github.com/Alinoureddine1/ZenStay/pkg/render"
+	"github.com/alexedwards/scs/v2"
 )
 
 var portNumber = ":8080"
+var app config.AppConfig
+var session *scs.SessionManager
 
 func main() {
-	var app config.AppConfig
+
+	//change to true when in production
+	app.InProduction = false
+
+	session = scs.New()
+	session.Lifetime = 24 * time.Hour // 24 hours
+	session.Cookie.Persist = true
+	session.Cookie.SameSite = http.SameSiteLaxMode
+	session.Cookie.Secure = app.InProduction
 	tc, err := render.CreateTemplateCache()
 
 	if err != nil {
