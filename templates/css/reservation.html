@@ -30,6 +30,7 @@
 </head>
 
 <body>
+   
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Navbar</a>
@@ -158,18 +159,25 @@
 
     document.getElementById("colorButton").addEventListener("click", function () {
        // notify("This is my message", "warning");
-       Swal.fire({
-  title: 'Error!',
-  text: 'Do you want to continue',
-  icon: 'error',
-  confirmButtonText: 'Cool'
+   
+
+        notifyAlert("title", "This is my message", "warning", "OK")
 })
-    })
+    
 
     const elem = document.getElementById('reservation-dates');
     const rangePicker = new DateRangePicker(elem, {
         format: "yyyy-mm-dd",
     });
+
+    function notifyAlert(title,msg,icon,confirmButtonText) {
+        Swal.fire({
+            title: title,
+            text: msg,
+            icon: icon,
+            confirmButtonText: confirmButtonText
+        })
+    }
 
     function notify(msg, msgType) {
         notie.alert({
@@ -178,6 +186,71 @@
         })
     }
 
+function Prompt(){
+
+let toast = function(c){
+    const {
+        msg="",
+        icon="success",
+        position="top-end",
+    }=c;
+
+    const Toast = Swal.mixin({
+  toast: true,
+  title: msg,
+  position: position,
+  icon: icon,
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+
+})
+
+}
+let sucess = function(c){
+    const {
+        title="",
+        msg="",
+        footer="",
+    }=c;
+
+cSwal.fire({
+  icon: 'sucess',
+  title: title,
+  text: msg,
+  footer: footer
+})
+let error = function(c){
+    const {
+        title="",
+        msg="",
+        footer="",
+    }=c;
+
+cSwal.fire({
+  icon: 'error',
+  title: title,
+  text: msg,
+  footer: footer
+})
+
+}
+return {
+    toast: toast,
+    sucess: sucess
+    error: error
+}
+
+
+
+}
 </script>
 
 </body>
