@@ -157,6 +157,18 @@
     })();
 
     document.getElementById("colorButton").addEventListener("click", function () {
+        let html = `
+        <form id="check-availability-form" action ="" method = "post" novalidate class="needs-validation">
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-row" id="reservation-dates-modal">
+                        <div class="col-md-6">
+                            <input required class="form-control" type="text" name="start" placeholder="Arrival">
+                   
+
+            </div>
+            </form>
+        `;
         attention.error({
             msg: 'Ooops...',
         });
@@ -239,6 +251,29 @@
                 footer: footer,
             })
 
+        }
+
+        async function custom(c){
+            const {
+                msg = "",  
+                title = "",
+
+            }=c
+            const {value:formValues} = await Swal.fire({
+                title: title,
+                html: msg,
+                backdrop: false,
+                focusConfirm: false,
+                showCancelButton: true,
+                cancelButtonText: 'Cancel',
+                confirmButtonText: 'Submit',
+                preConfirm: () => {
+                    return [
+                        document.getElementById('swal-input1').value,
+                        document.getElementById('swal-input2').value
+                    ]
+                }
+            })
         }
 
         return {
