@@ -26,6 +26,17 @@
         .notie-container{
             box-shadow: none;
         }
+
+        .notie-background{
+            background-color: #163b65;
+        }
+
+        .notie-text{
+            color: white;
+        }
+        .datepicker {
+            z-index: 1600 !important; 
+        }
     </style>
 </head>
 
@@ -164,10 +175,13 @@
                     <div class="form-row" id="reservation-dates-modal">
                         <div class="col-md-6">
                             <input required class="form-control" type="text" name="start" placeholder="Arrival">
-                   
+                        </div>
+                    </div>
+                </div>
+    
 
             </div>
-            </form>
+         </form>
         `;
         attention.error({
             msg: 'Ooops...',
@@ -267,6 +281,19 @@
                 showCancelButton: true,
                 cancelButtonText: 'Cancel',
                 confirmButtonText: 'Submit',
+                willOpen:() =>{
+                    const elem = document.getElementById('reservation-dates-modal');
+                    const rangePicker = new DateRangePicker(elem, {
+                        format: "yyyy-mm-dd",
+                        showOnFocus: true,
+                    });
+
+                },
+                didOpen: () => {
+                   document.getElementById('start').removeAttribute('disabled')
+                   document.getElementById('end').removeAttribute('disabled')
+
+                },
                 preConfirm: () => {
                     return [
                         document.getElementById('swal-input1').value,
@@ -280,6 +307,7 @@
             toast: toast,
             success: success,
             error: error,
+            custom :custom
         }
     }
 
