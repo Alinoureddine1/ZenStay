@@ -137,16 +137,15 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    console.log("I am printing from javascript");
-
-    (function() {
+    let attention = Prompt();
+    (function () {
         'use strict';
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             let forms = document.getElementsByClassName('needs-validation');
             // Loop over them and prevent submission
-            Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
+            Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
                     if (form.checkValidity() === false) {
                         event.preventDefault();
                         event.stopPropagation();
@@ -158,26 +157,15 @@
     })();
 
     document.getElementById("colorButton").addEventListener("click", function () {
-       // notify("This is my message", "warning");
-   
-
-        notifyAlert("title", "This is my message", "warning", "OK")
-})
-    
+        attention.error({
+            msg: 'Ooops...',
+        });
+    })
 
     const elem = document.getElementById('reservation-dates');
     const rangePicker = new DateRangePicker(elem, {
         format: "yyyy-mm-dd",
     });
-
-    function notifyAlert(title,msg,icon,confirmButtonText) {
-        Swal.fire({
-            title: title,
-            text: msg,
-            icon: icon,
-            confirmButtonText: confirmButtonText
-        })
-    }
 
     function notify(msg, msgType) {
         notie.alert({
@@ -186,71 +174,80 @@
         })
     }
 
-function Prompt(){
+    function notifyModal(title, text, icon, confirmationButtonText) {
+        Swal.fire({
+            title: title,
+            html: text,
+            icon: icon,
+            confirmButtonText: confirmationButtonText
+        })
+    }
 
-let toast = function(c){
-    const {
-        msg="",
-        icon="success",
-        position="top-end",
-    }=c;
+    function Prompt() {
+        let toast = function (c) {
+            const{
+                msg = '',
+                icon = 'success',
+                position = 'top-end',
 
-    const Toast = Swal.mixin({
-  toast: true,
-  title: msg,
-  position: position,
-  icon: icon,
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
+            } = c;
 
-Toast.fire({
+            const Toast = Swal.mixin({
+                toast: true,
+                title: msg,
+                position: position,
+                icon: icon,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
 
-})
+            Toast.fire({})
+        }
 
-}
-let sucess = function(c){
-    const {
-        title="",
-        msg="",
-        footer="",
-    }=c;
+        let success = function (c) {
+            const {
+                msg = "",
+                title = "",
+                footer = "",
+            } = c
 
-cSwal.fire({
-  icon: 'sucess',
-  title: title,
-  text: msg,
-  footer: footer
-})
-let error = function(c){
-    const {
-        title="",
-        msg="",
-        footer="",
-    }=c;
+            Swal.fire({
+                icon: 'success',
+                title: title,
+                text: msg,
+                footer: footer,
+            })
 
-cSwal.fire({
-  icon: 'error',
-  title: title,
-  text: msg,
-  footer: footer
-})
+        }
 
-}
-return {
-    toast: toast,
-    sucess: sucess
-    error: error
-}
+        let error = function (c) {
+            const {
+                msg = "",
+                title = "",
+                footer = "",
+            } = c
 
+            Swal.fire({
+                icon: 'error',
+                title: title,
+                text: msg,
+                footer: footer,
+            })
 
+        }
 
-}
+        return {
+            toast: toast,
+            success: success,
+            error: error,
+        }
+    }
+
 </script>
 
 </body>
