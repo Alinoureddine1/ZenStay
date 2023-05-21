@@ -32,6 +32,7 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
 }
 
+// About renders the about page
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	stringMap := make(map[string]string)
 	stringMap["test"] = "Test string"
@@ -39,4 +40,29 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
 	})
+}
+
+// Contact renders the contact page
+func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "contact.page.tmpl", &models.TemplateData{})
+}
+
+// RoyalSuites renders the royal suites page
+func (m *Repository) RoyalSuites(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "royal-suite.page.tmpl", &models.TemplateData{})
+}
+
+// DeluxeSuites renders the deluxe suites page
+func (m *Repository) DeluxeSuites(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "deluxe-suite.page.tmpl", &models.TemplateData{})
+}
+
+// SearchAvailability renders the search availability page
+func (m *Repository) SearchAvailability(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "search-availability.page.tmpl", &models.TemplateData{})
+}
+
+// Reservation renders the make a reservation page
+func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "make-reservation.page.tmpl", &models.TemplateData{})
 }
