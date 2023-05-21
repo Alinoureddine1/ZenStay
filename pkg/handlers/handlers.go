@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/Alinoureddine1/ZenStay/pkg/config"
@@ -28,8 +29,9 @@ func NewHandlers(r *Repository) {
 	Repo = r
 }
 
+// Home renders the home page
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 
 // About renders the about page
@@ -37,37 +39,59 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	stringMap := make(map[string]string)
 	stringMap["test"] = "Test string"
 
-	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
+	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
 	})
 }
 
 // Contact renders the contact page
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "contact.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "contact.page.tmpl", &models.TemplateData{})
 }
 
 // RoyalSuites renders the royal suites page
 func (m *Repository) RoyalSuites(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "royal-suite.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "royal-suite.page.tmpl", &models.TemplateData{})
 }
 
 // DeluxeSuites renders the deluxe suites page
 func (m *Repository) DeluxeSuites(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "deluxe-suite.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "deluxe-suite.page.tmpl", &models.TemplateData{})
 }
 
 // SearchAvailability renders the search availability page
 func (m *Repository) SearchAvailability(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "search-availability.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "search-availability.page.tmpl", &models.TemplateData{})
 }
 
 // PostAvailability renders the search availability page
 func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Posted to search availability"))
+	start := r.Form.Get("start")
+	end := r.Form.Get("end")
+
+	w.Write([]byte("start date is " + start + " and end date is " + end))
+}
+
+type jsonResponse struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"message"`
+}
+
+// AvailabilityJSON handles request for availability and sends JSON response
+func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
+	resp := jsonResponse{
+		OK:      true,
+		Message: "Available!",
+	}
+	out, err := json.MarshalIndent(resp, "", "     ")
+	if err != nil {
+		m.App.ErrorLog.Println(err)
+	}
+	m.App.InfoLog.Println(string(out))
+
 }
 
 // Reservation renders the make a reservation page
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "make-reservation.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{})
 }
