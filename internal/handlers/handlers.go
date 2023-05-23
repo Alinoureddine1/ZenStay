@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/Alinoureddine1/ZenStay/pkg/config"
-	"github.com/Alinoureddine1/ZenStay/pkg/models"
-	"github.com/Alinoureddine1/ZenStay/pkg/render"
+	"github.com/Alinoureddine1/ZenStay/internal/config"
+	"github.com/Alinoureddine1/ZenStay/internal/forms"
+	"github.com/Alinoureddine1/ZenStay/internal/models"
+	"github.com/Alinoureddine1/ZenStay/internal/render"
 )
 
 // Repo is the repository used by the handlers
@@ -94,5 +95,13 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 
 // Reservation renders the make a reservation page
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+
+		Form: forms.New(nil),
+	})
+}
+
+// PostReservation handles posting of a reservation form
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{})
 }

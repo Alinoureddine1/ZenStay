@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/Alinoureddine1/ZenStay/pkg/config"
-	"github.com/Alinoureddine1/ZenStay/pkg/handlers"
+	"github.com/Alinoureddine1/ZenStay/internal/config"
+	"github.com/Alinoureddine1/ZenStay/internal/handlers"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -28,6 +28,8 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Get("/royal-suite", handlers.Repo.RoyalSuites)
 	mux.Get("/deluxe-suite", handlers.Repo.DeluxeSuites)
 	mux.Get("/make-reservation", handlers.Repo.Reservation)
+	mux.Post("/make-reservation", handlers.Repo.PostReservation)
+
 	fileServer := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
 	return mux

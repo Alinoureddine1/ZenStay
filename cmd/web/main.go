@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Alinoureddine1/ZenStay/pkg/config"
-	"github.com/Alinoureddine1/ZenStay/pkg/handlers"
-	"github.com/Alinoureddine1/ZenStay/pkg/render"
+	"github.com/Alinoureddine1/ZenStay/internal/config"
+	"github.com/Alinoureddine1/ZenStay/internal/handlers"
+	"github.com/Alinoureddine1/ZenStay/internal/render"
 	"github.com/alexedwards/scs/v2"
 )
 

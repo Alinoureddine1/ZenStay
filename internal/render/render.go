@@ -8,10 +8,10 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"github.com/Alinoureddine1/ZenStay/pkg/config"
+	"github.com/Alinoureddine1/ZenStay/internal/config"
 	"github.com/justinas/nosurf"
 
-	"github.com/Alinoureddine1/ZenStay/pkg/models"
+	"github.com/Alinoureddine1/ZenStay/internal/models"
 )
 
 var app *config.AppConfig
