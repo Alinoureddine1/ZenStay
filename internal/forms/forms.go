@@ -17,8 +17,8 @@ func (f *Form) Valid() bool {
 // New initializes a custom Form struct
 func New(data url.Values) *Form {
 	return &Form{
-		data,
 		errors(map[string][]string{}),
+		data,
 	}
 }
 
