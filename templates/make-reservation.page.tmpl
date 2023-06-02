@@ -5,16 +5,18 @@
         <div class="row">
             <div class="col">
                 <h1 class="mt-3">Make Reservation</h1>
+
                 {{$res := index .Data "reservation"}}
-                <form method="post" action="/make-reservation" class="needs-validation" novalidate>
-                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">  
+
+                <form method="post" action="" class="" novalidate>
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+
                     <div class="form-group mt-3">
                         <label for="first_name">First Name:</label>
                         {{with .Form.Errors.Get "first_name"}}
-                            <div class="alert alert-danger">{{.}}</div>
+                            <label class="text-danger">{{.}}</label>
                         {{end}}
-                        <input
-                        class="form-control {{with .Form.Errors.Get "first_name"}} is-invalid {{end}}"
+                        <input class="form-control {{with .Form.Errors.Get "first_name"}} is-invalid {{end}}"
                                id="first_name" autocomplete="off" type='text'
                                name='first_name' value="{{$res.FirstName}}" required>
                     </div>
@@ -22,9 +24,9 @@
                     <div class="form-group">
                         <label for="last_name">Last Name:</label>
                         {{with .Form.Errors.Get "last_name"}}
-                        <div class="alert alert-danger">{{.}}</div>
-                    {{end}}
-                        <input class="form-control {{with .Form.Errors.Get "first_name"}} is-invalid {{end}}"
+                            <label class="text-danger">{{.}}</label>
+                        {{end}}
+                        <input class="form-control {{with .Form.Errors.Get "last_name"}} is-invalid {{end}}"
                                id="last_name" autocomplete="off" type='text'
                                name='last_name' value="{{$res.LastName}}" required>
                     </div>
@@ -32,9 +34,9 @@
                     <div class="form-group">
                         <label for="email">Email:</label>
                         {{with .Form.Errors.Get "email"}}
-                        <div class="alert alert-danger">{{.}}</div>
-                    {{end}}
-                        <input class="form-control {{with .Form.Errors.Get "first_name"}} is-invalid {{end}}" id="email"
+                            <label class="text-danger">{{.}}</label>
+                        {{end}}
+                        <input class="form-control {{with .Form.Errors.Get "email"}} is-invalid {{end}}" id="email"
                                autocomplete="off" type='email'
                                name='email' value="{{$res.Email}}" required>
                     </div>
@@ -42,9 +44,9 @@
                     <div class="form-group">
                         <label for="phone">Phone:</label>
                         {{with .Form.Errors.Get "phone"}}
-                        <div class="alert alert-danger">{{.}}</div>
-                    {{end}}
-                        <input class="form-control {{with .Form.Errors.Get "first_name"}} is-invalid {{end}}" id="phone"
+                            <label class="text-danger">{{.}}</label>
+                        {{end}}
+                        <input class="form-control {{with .Form.Errors.Get "phone"}} is-invalid {{end}}" id="phone"
                                autocomplete="off" type='email'
                                name='phone' value="{{$res.Phone}}" required>
                     </div>
@@ -59,5 +61,3 @@
 
     </div>
 {{end}}
-
-

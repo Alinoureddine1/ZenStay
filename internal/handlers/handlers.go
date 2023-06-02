@@ -2,12 +2,12 @@ package handlers
 
 import (
 	"encoding/json"
-	"net/http"
-
 	"github.com/Alinoureddine1/ZenStay/internal/config"
 	"github.com/Alinoureddine1/ZenStay/internal/forms"
 	"github.com/Alinoureddine1/ZenStay/internal/models"
 	"github.com/Alinoureddine1/ZenStay/internal/render"
+
+	"net/http"
 )
 
 // Repo is the repository used by the handlers
@@ -32,6 +32,8 @@ func NewHandlers(r *Repository) {
 
 // Home renders the home page
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
+	remoteIP := r.RemoteAddr
+	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 	render.RenderTemplate(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 
