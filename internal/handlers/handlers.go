@@ -123,7 +123,9 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	}
 	form := forms.New(r.PostForm)
 
-	form.Has("first_name", r)
+	form.Required("first_name", "last_name", "email")
+	form.MinLength("first_name", 3, r)
+	form.IsEmail("email")
 
 	if !form.Valid() {
 
@@ -136,5 +138,11 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		})
 		return //return so that the rest of the code doesn't execute
 	}
+	m.App.Session.Put(r.Context(), "reservation", reservation)
+	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
 
+}
+
+func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "reservation-summary.page.tmpl", &models.TemplateData{})
 }
