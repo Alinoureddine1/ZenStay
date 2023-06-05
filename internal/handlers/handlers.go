@@ -150,7 +150,8 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
-	data := make(map[string]interface{}) //create a map of type string and interface
+	m.App.Session.Remove(r.Context(), "reservation") //remove the reservation from the session
+	data := make(map[string]interface{})             //create a map of type string and interface
 	data["reservation"] = reservation
 
 	render.RenderTemplate(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
