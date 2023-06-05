@@ -1,13 +1,15 @@
 package main
 
 import (
+	"encoding/gob"
 	"log"
 	"net/http"
 	"time"
 
-	"github.com/Alinoureddine1/ZenStay/pkg/config"
-	"github.com/Alinoureddine1/ZenStay/pkg/handlers"
-	"github.com/Alinoureddine1/ZenStay/pkg/render"
+	"github.com/Alinoureddine1/ZenStay/internal/config"
+	"github.com/Alinoureddine1/ZenStay/internal/handlers"
+	"github.com/Alinoureddine1/ZenStay/internal/models"
+	"github.com/Alinoureddine1/ZenStay/internal/render"
 	"github.com/alexedwards/scs/v2"
 )
 
@@ -16,6 +18,7 @@ var app config.AppConfig
 var session *scs.SessionManager
 
 func main() {
+	gob.Register(models.Reservation{})
 
 	//change to true when in production
 	app.InProduction = false
