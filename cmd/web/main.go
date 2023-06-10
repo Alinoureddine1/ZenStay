@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/gob"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -18,6 +19,20 @@ var app config.AppConfig
 var session *scs.SessionManager
 
 func main() {
+	err := run()
+
+	fmt.Println("Starting application on port", portNumber)
+
+	srv := &http.Server{
+		Addr:    portNumber,
+		Handler: routes(&app),
+	}
+	err = srv.ListenAndServe()
+	log.Fatal(err)
+
+}
+
+func run() error {
 	gob.Register(models.Reservation{})
 
 	//change to true when in production
@@ -40,11 +55,7 @@ func main() {
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
 	render.NewTemplates(&app)
-	srv := &http.Server{
-		Addr:    portNumber,
-		Handler: routes(&app),
-	}
-	err = srv.ListenAndServe()
-	log.Fatal(err)
+
+	return nil
 
 }
