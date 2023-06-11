@@ -17,6 +17,7 @@ import (
 var portNumber = ":8080"
 var app config.AppConfig
 var session *scs.SessionManager
+var pathToTemplates = "./templates"
 
 func main() {
 	err := run()
@@ -48,7 +49,7 @@ func run() error {
 	session.Cookie.Secure = app.InProduction
 
 	app.Session = session
-	tc, err := render.CreateTemplateCache()
+	tc, err := render.CreateTemplateCache(pathToTemplates)
 
 	if err != nil {
 		log.Fatal("Cannot create template cache")
