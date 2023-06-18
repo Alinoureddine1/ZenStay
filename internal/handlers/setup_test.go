@@ -46,7 +46,7 @@ func getRoutes() http.Handler {
 
 	//Recovers instead of panicking
 	mux.Use(middleware.Recoverer)
-	mux.Use(NoSurf)
+	//mux.Use(NoSurf)
 	mux.Use(SessionLoad)
 
 	mux.Get("/", Repo.Home)
