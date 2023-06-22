@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/Alinoureddine1/ZenStay/internal/config"
@@ -18,6 +19,8 @@ var portNumber = ":8080"
 var app config.AppConfig
 var session *scs.SessionManager
 var pathToTemplates = "./templates"
+var infoLog *log.Logger
+var errorLog *log.Logger
 
 func main() {
 	err := run()
@@ -41,6 +44,8 @@ func run() error {
 
 	//change to true when in production
 	app.InProduction = false
+	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
 
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour // 24 hours
