@@ -2,8 +2,10 @@ package handlers
 
 import (
 	"encoding/json"
+
 	"github.com/Alinoureddine1/ZenStay/internal/config"
 	"github.com/Alinoureddine1/ZenStay/internal/forms"
+	"github.com/Alinoureddine1/ZenStay/internal/helpers"
 	"github.com/Alinoureddine1/ZenStay/internal/models"
 	"github.com/Alinoureddine1/ZenStay/internal/render"
 
@@ -39,12 +41,8 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 
 // About renders the about page
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
-	stringMap := make(map[string]string)
-	stringMap["test"] = "Test string"
 
-	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{
-		StringMap: stringMap,
-	})
+	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{})
 }
 
 // Contact renders the contact page
@@ -88,7 +86,7 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 	}
 	out, err := json.MarshalIndent(resp, "", "     ")
 	if err != nil {
-		m.App.ErrorLog.Println(err)
+		helpers.ServerError(w, err)
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(out)
@@ -111,7 +109,8 @@ func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		m.App.ErrorLog.Println(err)
+		helpers.ServerError(w, err)
+
 	}
 	reservation := models.Reservation{
 		FirstName: r.Form.Get("first_name"),
@@ -146,6 +145,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
 	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation) //type assertion
 	if !ok {
+		m.App.ErrorLog.Println("Can't get reservation from session")
 		m.App.Session.Put(r.Context(), "error", "Can't get reservation from session")
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
