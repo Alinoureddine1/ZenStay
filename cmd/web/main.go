@@ -10,6 +10,7 @@ import (
 
 	"github.com/Alinoureddine1/ZenStay/internal/config"
 	"github.com/Alinoureddine1/ZenStay/internal/handlers"
+	"github.com/Alinoureddine1/ZenStay/internal/helpers"
 	"github.com/Alinoureddine1/ZenStay/internal/models"
 	"github.com/Alinoureddine1/ZenStay/internal/render"
 	"github.com/alexedwards/scs/v2"
@@ -67,6 +68,7 @@ func run() error {
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
 	render.NewTemplates(&app)
+	helpers.NewHelpers(&app)
 
 	return nil
 
