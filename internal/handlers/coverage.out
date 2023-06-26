@@ -1,0 +1,22 @@
+mode: set
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:22.47,26.2 1 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:29.33,31.2 1 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:34.67,38.2 3 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:41.68,48.2 3 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:51.70,53.2 1 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:56.74,58.2 1 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:61.75,63.2 1 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:66.81,68.2 1 0
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:71.79,76.2 3 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:84.79,90.16 3 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:90.16,92.3 1 0
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:93.2,94.14 2 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:99.74,108.2 4 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:111.78,113.16 2 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:113.16,115.3 1 0
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:116.2,130.19 6 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:130.19,140.3 4 0
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:141.2,142.66 2 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:146.81,148.9 2 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:148.9,152.3 3 1
+github.com/Alinoureddine1/ZenStay/internal/handlers/handlers.go:153.2,159.4 4 0
