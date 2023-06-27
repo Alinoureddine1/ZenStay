@@ -1,0 +1,8 @@
+development:
+  dialect: postgres
+  database: zenstay
+  user: postgres
+  password: password
+  host: 127.0.0.1
+  pool: 5
+
