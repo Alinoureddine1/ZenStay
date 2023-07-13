@@ -4,10 +4,13 @@ import (
 	"encoding/json"
 
 	"github.com/Alinoureddine1/ZenStay/internal/config"
+	"github.com/Alinoureddine1/ZenStay/internal/driver"
 	"github.com/Alinoureddine1/ZenStay/internal/forms"
 	"github.com/Alinoureddine1/ZenStay/internal/helpers"
 	"github.com/Alinoureddine1/ZenStay/internal/models"
 	"github.com/Alinoureddine1/ZenStay/internal/render"
+	"github.com/Alinoureddine1/ZenStay/internal/repository"
+	"github.com/Alinoureddine1/ZenStay/internal/repository/dbrepo"
 
 	"net/http"
 )
@@ -18,12 +21,14 @@ var Repo *Repository
 // Repository is the repository type
 type Repository struct {
 	App *config.AppConfig
+	DB  repository.DatabaseRepo
 }
 
 // NewRepo creates the repository
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
 }
 
