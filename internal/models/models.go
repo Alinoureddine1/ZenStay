@@ -1,30 +1,77 @@
 package models
 
+import "time"
+
 type Reservation struct {
-	// ID is the unique id of the reservation
-	ID int
-	// FirstName is the first name of the person making the reservation
+	ID        int
 	FirstName string
-	// LastName is the last name of the person making the reservation
-	LastName string
-	// Email is the email of the person making the reservation
-	Email string
-	// Phone is the phone number of the person making the reservation
-	Phone string
-	// RoomID is the id of the room reserved
-	RoomID int
-	// Room is the room info of the room reserved
-	//Room Room
-	// StartDate is the start date of the reservation
+	LastName  string
+	Email     string
+	Phone     string
+	RoomID    int
 	StartDate string
-	// EndDate is the end date of the reservation
-	EndDate string
-	// CreatedAt is the time the reservation was created
-	CreatedAt string
-	// UpdatedAt is the time the reservation was updated
-	UpdatedAt string
-	// DeletedAt is the time the reservation was deleted
-	DeletedAt string
-	// Processed is true if the reservation has been processed
+	EndDate   string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt time.Time
 	Processed int
+}
+
+type Users struct {
+	Id          int
+	FirstName   string
+	LastName    string
+	Email       string
+	Password    string
+	AccessLevel int
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	DeletedAt   time.Time
+}
+
+type Rooms struct {
+	Id        int
+	RoomName  string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt time.Time
+}
+
+type Restrictions struct {
+	Id              int
+	RestrictionName string
+	CreatedAt       time.Time
+	UpdatedAt       time.Time
+	DeletedAt       time.Time
+}
+
+type Reservations struct {
+	Id        int
+	FirstName string
+	LastName  string
+	Email     string
+	Phone     string
+	RoomId    int
+	StartDate time.Time
+	EndDate   time.Time
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt time.Time
+	Room      Rooms
+}
+
+type RoomRestrictions struct {
+	Id            int
+	RoomId        int
+	ReservationId int
+	RestrictionId int
+	StartDate     time.Time
+	EndDate       time.Time
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+	DeletedAt     time.Time
+
+	Room        Rooms
+	Reservation Reservations
+	Restriction Restrictions
 }
