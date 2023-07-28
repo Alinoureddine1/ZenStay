@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"encoding/json"
+	"strconv"
+	"time"
 
 	"github.com/Alinoureddine1/ZenStay/internal/config"
 	"github.com/Alinoureddine1/ZenStay/internal/driver"
@@ -41,33 +43,33 @@ func NewHandlers(r *Repository) {
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
-	render.RenderTemplate(w, r, "home.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 
 // About renders the about page
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 
-	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "about.page.tmpl", &models.TemplateData{})
 }
 
 // Contact renders the contact page
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "contact.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "contact.page.tmpl", &models.TemplateData{})
 }
 
 // RoyalSuites renders the royal suites page
 func (m *Repository) RoyalSuites(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "royal-suite.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "royal-suite.page.tmpl", &models.TemplateData{})
 }
 
 // DeluxeSuites renders the deluxe suites page
 func (m *Repository) DeluxeSuites(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "deluxe-suite.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "deluxe-suite.page.tmpl", &models.TemplateData{})
 }
 
 // SearchAvailability renders the search availability page
 func (m *Repository) SearchAvailability(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "search-availability.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "search-availability.page.tmpl", &models.TemplateData{})
 }
 
 // PostAvailability renders the search availability page
@@ -103,7 +105,7 @@ func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 	var emptyReservation models.Reservation
 	data := make(map[string]interface{})
 	data["reservation"] = emptyReservation
-	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "make-reservation.page.tmpl", &models.TemplateData{
 
 		Form: forms.New(nil),
 		Data: data,
@@ -117,13 +119,32 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 
 	}
+	sd := r.Form.Get("start_date")
+	ed := r.Form.Get("end_date")
+
+	layout := "2006-01-02"
+	startDate, err := time.Parse(layout, sd)
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+	endDate, err := time.Parse(layout, ed)
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
+	roomID, err := strconv.Atoi(r.Form.Get("room_id")) //convert the room_id from string to int
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
 	reservation := models.Reservation{
 		FirstName: r.Form.Get("first_name"),
 		LastName:  r.Form.Get("last_name"),
 		Email:     r.Form.Get("email"),
 		Phone:     r.Form.Get("phone"),
-
-		// Form: forms.New(nil),
+		StartDate: startDate,
+		EndDate:   endDate,
+		RoomId:    roomID,
 	}
 	form := forms.New(r.PostForm)
 
@@ -135,12 +156,16 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 
 		data := make(map[string]interface{})
 		data["reservation"] = reservation
-		render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+		render.Template(w, r, "make-reservation.page.tmpl", &models.TemplateData{
 
 			Form: form,
 			Data: data,
 		})
 		return //return so that the rest of the code doesn't execute
+	}
+	err = m.DB.InsertReservation(reservation)
+	if err != nil {
+		helpers.ServerError(w, err)
 	}
 	m.App.Session.Put(r.Context(), "reservation", reservation)
 	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
@@ -159,7 +184,7 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 	data := make(map[string]interface{})             //create a map of type string and interface
 	data["reservation"] = reservation
 
-	render.RenderTemplate(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
 		Data: data,
 	})
 }
