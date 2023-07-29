@@ -1,9 +1,14 @@
 package repository
 
-import "github.com/Alinoureddine1/ZenStay/internal/models"
+import (
+	"time"
+
+	"github.com/Alinoureddine1/ZenStay/internal/models"
+)
 
 type DatabaseRepo interface {
 	AllUsers() bool
 	InsertReservation(res models.Reservation) (int, error)
 	InsertRoomRestriction(r models.RoomRestriction) error
+	SearchAvailabilityByDates(start, end time.Time, roomId int) (bool, error)
 }
