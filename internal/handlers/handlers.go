@@ -34,6 +34,12 @@ func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
 }
+func NewTestRepo(a *config.AppConfig) *Repository {
+	return &Repository{
+		App: a,
+		DB:  dbrepo.NewTestingRepo(a),
+	}
+}
 
 // NewHandlers sets the repository for the handlers
 func NewHandlers(r *Repository) {
