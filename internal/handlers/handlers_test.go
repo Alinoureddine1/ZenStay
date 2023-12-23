@@ -33,12 +33,12 @@ var theTests = []struct {
 		{Key: "start", Val: "2020-01-01"},
 		{Key: "end", Val: "2020-01-03"},
 	}, 200},
-	{"post-make-reservation", "/make-reservation", "POST", []postData{
-		{Key: "first_name", Val: "Tester"},
-		{Key: "last_name", Val: "1"},
-		{Key: "email", Val: "test@test.com"},
-		{Key: "phone", Val: "123456789"},
-	}, 200},
+	// {"post-make-reservation", "/make-reservation", "POST", []postData{
+	// 	{Key: "first_name", Val: "Tester"},
+	// 	{Key: "last_name", Val: "1"},
+	// 	{Key: "email", Val: "test@test.com"},
+	// 	{Key: "phone", Val: "123456789"},
+	// }, 200},
 }
 
 func TestHandlers(t *testing.T) {

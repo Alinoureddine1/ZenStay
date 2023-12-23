@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"testing"
 	"time"
 
 	"github.com/Alinoureddine1/ZenStay/internal/config"
@@ -24,29 +25,43 @@ var session *scs.SessionManager
 var pathToTemplates = "./../../templates"
 var functions = template.FuncMap{}
 
-func getRoutes() http.Handler {
+func TestMain(m *testing.M) {
 	gob.Register(models.Reservation{})
+
+	// change this to true when in production
 	app.InProduction = false
+
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	app.InfoLog = infoLog
+
 	errorLog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 	app.ErrorLog = errorLog
+
 	session = scs.New()
-	session.Lifetime = 24 * time.Hour // 24 hours
+	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
 	session.Cookie.SameSite = http.SameSiteLaxMode
 	session.Cookie.Secure = app.InProduction
+
 	app.Session = session
+
 	tc, err := CreateTestTemplateCache()
 	if err != nil {
-		log.Fatal("Cannot create template cache")
-
+		log.Fatal("cannot create template cache")
 	}
+
 	app.TemplateCache = tc
 	app.UseCache = true
-	repo := NewRepo(&app)
+
+	repo := NewTestRepo(&app)
 	NewHandlers(repo)
 	render.NewRenderer(&app)
+
+	os.Exit(m.Run())
+}
+
+func getRoutes() http.Handler {
+
 	mux := chi.NewRouter()
 
 	//Recovers instead of panicking
